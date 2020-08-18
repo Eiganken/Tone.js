@@ -119,10 +119,11 @@ export class UserMedia extends ToneAudioNode<UserMediaOptions> {
 		// do getUserMedia
 		const constraints = {
 			audio: {
-				echoCancellation: false,
+				echoCancellation: true,
 				sampleRate: this.context.sampleRate,
-				noiseSuppression: false,
-				mozNoiseSuppression: false,
+				autoGainControl: false,
+				noiseSuppression: true,
+				mozNoiseSuppression: true,
 			}
 		};
 		if (this._device) {
@@ -194,6 +195,17 @@ export class UserMedia extends ToneAudioNode<UserMediaOptions> {
 	get deviceId(): string | undefined {
 		if (this._device) {
 			return this._device.deviceId;
+		} else {
+			return undefined;
+		}
+	}
+
+	/**
+	 * Returns a stream.
+	 */
+	get stream() {
+		if (this._stream) {
+			return this._stream;
 		} else {
 			return undefined;
 		}
